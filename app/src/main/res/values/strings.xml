@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Heath</string>
+    <string name="fill_info_title">Điền Thông Tin</string>
+    <string name="name_hint">Họ và tên</string>
+    <string name="gender_hint">Giới tính</string>
+    <string name="phone_hint">Số điện thoại</string>
+    <string name="email_hint">Email</string>
+    <string name="address_hint">Địa chỉ</string>
+    <string name="submit_button">Xác nhận</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="whites">#F2F5F9</color>
+    <color name="gray">#242E49</color>
+    <color name="blue">#0F67FE</color>
+    <color name="Agray">#5D6A85</color>
+    <color name="AsklepiosGray">#242E49</color>
+    <color name ="RedError">#FA4D5E</color>
+    <color name ="BackgroundError">#FFF1F3</color>
+
+</resources>
