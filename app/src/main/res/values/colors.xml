@@ -9,5 +9,13 @@
     <color name="AsklepiosGray">#242E49</color>
     <color name ="RedError">#FA4D5E</color>
     <color name ="BackgroundError">#FFF1F3</color>
-
+    <color name = "purple_Dark">#8883F0</color>
+    <color name="background_dark_mode">#111111</color>
+    <color name="sleep_green">#00BA88</color>
+    <color name="sleep_gray">#0E3329</color>
+    <color name="exercise">#FC9C57</color>
+    <color name="exercise_gray">#3D2B1E</color>
+    <color name="water">#6D98F4</color>
+    <color name="water_gray">#232C3E</color>"
+    <color name="brown_dark_mode">#EF8481</color>
 </resources>
