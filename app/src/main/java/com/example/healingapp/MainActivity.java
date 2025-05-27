@@ -15,6 +15,8 @@ import com.example.healingapp.data.models.GridArrayList;
 import com.example.healingapp.ui.common.CirleProgressView;
 import com.example.healingapp.ui.workout.SelectWorkoutAdapter;
 
+import org.osmdroid.config.Configuration;
+
 public class MainActivity extends AppCompatActivity {
 
     private CirleProgressView progressView;
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_select_workout);
 //        progressView = findViewById(R.id.progressView);
 //

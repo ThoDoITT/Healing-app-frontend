@@ -16,6 +16,7 @@
     <color name="exercise">#FC9C57</color>
     <color name="exercise_gray">#3D2B1E</color>
     <color name="water">#6D98F4</color>
-    <color name="water_gray">#232C3E</color>"
+    <color name="water_gray">#232C3E</color>
     <color name="brown_dark_mode">#EF8481</color>
+    <color name="gray_2">#262B37</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.healingapp.ui.workout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.healingapp.R;
 import com.example.healingapp.data.models.GridModelList;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdapter.ViewHolder> {
 
@@ -65,12 +67,14 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
         }
 
         public void setClickmethod(int position) {
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    GridModelList list = gridArrayList.get(position);
-                    Toast.makeText(context, "tessssss", Toast.LENGTH_SHORT).show();
+            textView.setOnClickListener(view -> {
+                GridModelList list = gridArrayList.get(position);
+
+                if (Objects.equals(list.getTitle(), "Running")) {
+                    Intent intent = new Intent(context, RunningActivity.class);
+                    context.startActivity(intent);
                 }
+                Toast.makeText(context, "tessssss", Toast.LENGTH_SHORT).show();
             });
         }
     }
