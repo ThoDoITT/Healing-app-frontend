@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtDistance"
+                android:id="@+id/txtDistanceDT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -71,7 +71,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtCalories"
+                        android:id="@+id/txtCaloriesDT"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -101,7 +101,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtStepCounter"
+                        android:id="@+id/txtStepCounterDT"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -133,7 +133,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtPace"
+                        android:id="@+id/txtPaceDT"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -162,7 +162,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtTime"
+                        android:id="@+id/txtTimeDT"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

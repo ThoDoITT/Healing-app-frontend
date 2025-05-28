@@ -100,7 +100,7 @@
                                 tools:layout_gravity="start" />
 
                             <EditText
-                                android:id="@+id/editTextTextEmailAddress3"
+                                android:id="@+id/editEmailLogin"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -147,14 +147,14 @@
                                 app:srcCompat="@drawable/ic_lock" />
 
                             <EditText
-                                android:id="@+id/editTextTextPassword"
+                                android:id="@+id/editPasswordLogin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:ems="10" />
 
                             <ImageButton
-                                android:id="@+id/imageButton"
+                                android:id="@+id/btnShowPassSigin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end"
@@ -175,6 +175,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <LinearLayout
+                            android:id="@+id/btnSubmitLogin"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_background_signin"

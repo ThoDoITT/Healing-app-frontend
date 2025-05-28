@@ -1,5 +1,6 @@
 package com.example.healingapp.ui.workout;
 
+import static com.example.healingapp.common.Consts.EXTRA_DATA_ID;
 import static com.example.healingapp.common.Consts.EXTRA_DATA_PAYLOAD;
 import static com.example.healingapp.common.Consts.EXTRA_TARGET_ACTIVITY_CLASS_NAME;
 import static com.example.healingapp.common.Consts.EXTRA_TASK_TYPE;
@@ -557,16 +558,19 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             float finalSpeedKmh = (finalPaceMinPerKm > 0) ? (60f / finalPaceMinPerKm) : 0f;
             float finalCalories = TrackingUtils.calculateCaloriesBurned(userWeightKg, finalSpeedKmh, finalDurationMillis);
             String finalCaloriesFormatted = String.format(Locale.US, "%.0f", finalCalories);
-
+            long actualRunStartTime = startTime;
+            long actualRunEndTime = actualRunStartTime + finalDurationMillis;
 
             // Tạo JSON payload
             JSONObject runDataJson = new JSONObject();
             try {
-                runDataJson.put("distance", finalDistanceKmFormatted + " km");
-                runDataJson.put("duration", finalDurationFormatted);
-                runDataJson.put("pace", finalPaceFormatted + "/km");
-                runDataJson.put("calories", finalCaloriesFormatted + " kcal");
-                runDataJson.put("steps", finalTotalSteps); // Thêm số bước
+                runDataJson.put("startTime", actualRunStartTime); // long - Thời điểm bắt đầu chạy
+                runDataJson.put("endTime", actualRunEndTime);     // long - Thời điểm kết thúc chạy
+                runDataJson.put("distanceMeters", finalDistanceMeters); // float - Đơn vị mét
+                runDataJson.put("paceMinPerKm", finalPaceMinPerKm);   // float - Phút/km
+                runDataJson.put("durationMillis", finalDurationMillis); // long - Milliseconds
+                runDataJson.put("calories", Math.round(finalCalories)); // long - Làm tròn float calories
+                runDataJson.put("steps", finalTotalSteps);
             } catch (JSONException e) {
                 Log.e("RunningActivity", "Lỗi tạo JSON cho dữ liệu chạy: " + e.getMessage());
             }
@@ -579,7 +583,9 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             Intent intent = new Intent(RunningActivity.this, LoadingActivity.class);
             intent.putExtra(EXTRA_TASK_TYPE, TaskType.SAVE_RUN_DATA);
             intent.putExtra(EXTRA_DATA_PAYLOAD, runDataPayload);
-            intent.putExtra(EXTRA_TARGET_ACTIVITY_CLASS_NAME, HomeActivity.class.getName());
+
+            intent.putExtra(EXTRA_TARGET_ACTIVITY_CLASS_NAME, DetailRunningActivity.class.getName());
+
 
             // Reset trạng thái và UI
             isTrackingActive = false;

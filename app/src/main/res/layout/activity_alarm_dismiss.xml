@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvAlarmTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ĐÃ ĐẾN GIỜ DẬY!"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/tvAlarmInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Báo thức cho phiên: ..."
+        android:textSize="18sp"
+        android:layout_below="@id/tvAlarmTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="48dp"/>
+
+    <Button
+        android:id="@+id/btnDismissAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TẮT BÁO THỨC"
+        android:textSize="20sp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:layout_below="@id/tvAlarmInfo"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -115,7 +115,7 @@
                     android:orientation="vertical">
 
                     <com.example.healingapp.ui.common.CirleProgressView
-                        android:id="@+id/progressView"
+                        android:id="@+id/pvSleep"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center" />
