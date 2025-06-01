@@ -6,7 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:background="@color/background_dark_mode"
     tools:context=".MainActivity">
+
+    <com.example.healingapp.ui.common.CustomHeaderView
+        android:id="@+id/my_custom_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/tvStatus"
@@ -14,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Đang tải..."
         android:textSize="18sp"
+        android:textColor="@color/white"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
@@ -41,6 +53,7 @@
         android:layout_height="wrap_content"
         android:text="Lịch sử giấc ngủ:"
         android:textSize="16sp"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
 

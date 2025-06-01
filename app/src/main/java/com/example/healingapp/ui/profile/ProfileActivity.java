@@ -1,5 +1,7 @@
 package com.example.healingapp.ui.profile;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,6 +21,8 @@ import com.example.healingapp.network.ApiClient;
 import com.example.healingapp.network.ApiResponseListener;
 import com.example.healingapp.network.models.ErrorResponse;
 import com.example.healingapp.network.models.UpdateProfileRequest;
+import com.example.healingapp.network.models.UserProfileData;
+import com.example.healingapp.network.models.response.GetUserProfileResponse;
 import com.example.healingapp.network.models.response.UpdateProfileResponse;
 import com.example.healingapp.ui.HomeActivity;
 import com.example.healingapp.utils.SessionManager;
@@ -46,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     private SessionManager sessionManager;
     private ProgressDialog progressDialog;
     private Calendar myCalendar;
+    public static final String EXTRA_IS_UPDATE_MODE = "IS_UPDATE_PROFILE_FROM_VIEW";
 
     private static final String TAG = "FillProfileActivity";
 
@@ -56,9 +61,66 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fill_proflie);
 
         init();
+        Intent intent = getIntent();
+        if (intent != null && intent.getBooleanExtra(EXTRA_IS_UPDATE_MODE, false)) {
+
+            // Có thể thay đổi tiêu đề hoặc chữ trên button nếu ở chế độ update
+            // getSupportActionBar().setTitle("Chỉnh sửa hồ sơ");
+            // btnSubmitProfile.setText("Cập nhật");
+            fetchAndDisplayUserProfile();
+        }
         setupListeners();
     }
 
+    private void fetchAndDisplayUserProfile () {
+        if (!sessionManager.isLoggedIn()) {
+            Toast.makeText(this, "Bạn chưa đăng nhập.", Toast.LENGTH_SHORT).show();
+            // TODO: Optionally navigate to LoginActivity
+            // Intent intent = new Intent(this, SigninActivity.class);
+            // startActivity(intent);
+            // finish();
+            return;
+        }
+
+        String authToken = sessionManager.getAuthToken();
+        String userId = sessionManager.getUserId(); // API endpoint uses user ID in path
+
+        if (userId == null || userId.isEmpty()) {
+            Toast.makeText(this, "Không tìm thấy ID người dùng.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+//        progressDialog.show();
+
+        apiClient.getUserProfile(authToken, userId, new ApiResponseListener<GetUserProfileResponse, ErrorResponse>() {
+            @Override
+            public void onSuccess(GetUserProfileResponse response) {
+//                progressDialog.dismiss();
+                UserProfileData userData = response.getData();
+
+                if (userData != null) {
+                    Log.d(TAG, "Lấy thông tin người dùng thành công: " + userData.getFullName());
+                    etName.setText(userData.getFullName());
+                    etHeight.setText(String.valueOf(userData.getHeight()));
+                    etWeight.setText(String.valueOf(userData.getWeight()));
+//                    etBirthDate.setText(userData.getBirthDate());
+
+                    int genderFromApi = userData.getGender();
+                    checkboxMale.setChecked(genderFromApi == GENDER_MALE);
+                    checkboxFemale.setChecked(genderFromApi == GENDER_FEMALE);
+                    checkboxOther.setChecked(genderFromApi == GENDER_OTHER);
+                }
+            }
+
+            @Override
+            public void onError(ErrorResponse errorResponse) {
+//                progressDialog.dismiss();
+                String errorMessage = errorResponse.getDetailedMessage() != null ? errorResponse.getDetailedMessage() : "Lỗi không xác định";
+
+                Log.e(TAG, "Lỗi khi lấy thông tin người dùng: " + errorMessage + " (Code: " + errorResponse.getStatusCode() + ")");
+            }
+        });
+    }
     private void init() {
         apiClient = new ApiClient();
         sessionManager = new SessionManager(getApplicationContext());

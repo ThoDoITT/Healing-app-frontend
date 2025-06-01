@@ -6,6 +6,7 @@ import static com.example.healingapp.utils.TrackingUtils.formatPace;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import androidx.lifecycle.Observer;
 import com.example.healingapp.R;
 import com.example.healingapp.data.AppDatabase;
 import com.example.healingapp.data.models.workout.RunningSession;
+import com.example.healingapp.ui.HomeActivity;
 
 import java.util.Locale;
 
@@ -31,6 +33,7 @@ public class DetailRunningActivity extends AppCompatActivity {
     private TextView tvSteps;
     private AppDatabase db;
     private int idRunning = -1;
+    private ImageView btn_back_detail_running;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,12 @@ public class DetailRunningActivity extends AppCompatActivity {
         tvDuration = findViewById(R.id.txtTimeDT);
         tvCalories = findViewById(R.id.txtCaloriesDT);
         tvSteps = findViewById(R.id.txtStepCounterDT);
+        btn_back_detail_running = findViewById(R.id.btn_back_detail_running);
 
+        btn_back_detail_running.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailRunningActivity.this, HomeActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void loadRunDetails(int runId) {

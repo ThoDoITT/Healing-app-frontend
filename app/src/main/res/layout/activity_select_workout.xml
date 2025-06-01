@@ -10,17 +10,39 @@
     android:background="@color/background_dark_mode"
     >
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/view_common_header" />
+    <com.example.healingapp.ui.common.CustomHeaderView
+        android:id="@+id/my_custom_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        android:layout_marginTop="30dp"
 
+        app:layout_constraintTop_toBottomOf="@+id/my_custom_header" />
+
+    <Button
+        android:id="@+id/btnShowHistoryRun"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Lịch sử chạy bộ"
+        app:layout_constraintBottom_toTopOf="@+id/my_bottom_navbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.example.healingapp.ui.common.CutomNavbarView
+        android:id="@+id/my_bottom_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingClass,MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

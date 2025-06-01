@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
+    android:fitsSystemWindows="true"
+    android:background="@color/background_dark_mode"
     android:gravity="center">
 
     <TextView
@@ -12,6 +14,7 @@
         android:text="ĐÃ ĐẾN GIỜ DẬY!"
         android:textSize="28sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"/>
 
@@ -21,6 +24,7 @@
         android:layout_height="wrap_content"
         android:text="Báo thức cho phiên: ..."
         android:textSize="18sp"
+
         android:layout_below="@id/tvAlarmTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="48dp"/>
@@ -34,6 +38,7 @@
         android:paddingStart="40dp"
         android:paddingEnd="40dp"
         android:paddingTop="20dp"
+        android:backgroundTint="@color/brown_dark_mode"
         android:paddingBottom="20dp"
         android:layout_below="@id/tvAlarmInfo"
         android:layout_centerHorizontal="true"/>

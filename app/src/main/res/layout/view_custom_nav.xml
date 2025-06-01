@@ -28,6 +28,7 @@
             >
 
             <LinearLayout
+                android:id="@+id/navHomeItem"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
 
@@ -56,6 +57,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/navbarWorkout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
@@ -76,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Home"
+                    android:text="Workout"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -93,6 +95,7 @@
                 android:visibility="visible">
 
                 <ImageButton
+                    android:id="@+id/btnAddNavbar"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:layout_gravity="center"
@@ -105,6 +108,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/navbarSleep"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
@@ -117,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:srcCompat="@drawable/chart_simple_24"
+                    app:srcCompat="@drawable/face_sleeping_24"
                     app:tint="@color/white" />
 
                 <TextView
@@ -125,13 +129,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Home"
+                    android:text="Sleep"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/navbarProfile"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
@@ -153,7 +158,7 @@
 
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Home"
+                    android:text="Profile"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />

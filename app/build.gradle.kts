@@ -37,7 +37,6 @@ android {
 
 dependencies {
 
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -75,4 +74,9 @@ dependencies {
 
     // lưu session login
     implementation("androidx.security:security-crypto:1.0.0")
+
+    // chart
+
+//    implementation ("com.github.AnyChart:AnyChart-Android:1.1.5")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

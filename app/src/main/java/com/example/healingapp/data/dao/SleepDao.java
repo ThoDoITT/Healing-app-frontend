@@ -49,4 +49,6 @@ public interface SleepDao {
      */
     @Query("SELECT * FROM SleepSessions WHERE startTimeMillis >= :rangeStartMillis AND startTimeMillis <= :rangeEndMillis AND durationMillis > 0 ORDER BY startTimeMillis ASC")
     LiveData<List<SleepSession>> getSleepSessionsForDateRange(long rangeStartMillis, long rangeEndMillis);
+
+
 }

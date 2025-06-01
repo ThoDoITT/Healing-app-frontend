@@ -70,9 +70,8 @@
                         android:id="@+id/textView2"
                         android:layout_width="300dp"
                         android:layout_height="18dp"
-                        android:fontFamily="@font/plus_jakarta_sans_extralight"
                         android:text="Email Address"
-                        android:textColor="#242E49"
+                        android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -96,6 +95,7 @@
                                 android:id="@+id/imageView3"
                                 android:layout_width="32dp"
                                 android:layout_height="37dp"
+                                android:padding="2dp"
                                 app:srcCompat="@drawable/ic_email"
                                 tools:layout_gravity="start" />
 
@@ -105,10 +105,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:ems="10"
-                                android:hint="Input Email"
+                                android:hint="  Input Email"
                                 android:inputType="textEmailAddress"
                                 android:paddingTop="12dp"
-                                android:textSize="8sp" />
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -119,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:fontFamily="@font/plus_jakarta_sans_extralight"
+                        android:textColor="@color/black"
                         android:text="Password"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -144,6 +145,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="37dp"
                                 android:layout_gravity="start"
+                                android:padding="2dp"
                                 app:srcCompat="@drawable/ic_lock" />
 
                             <EditText
@@ -151,6 +153,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:textColor="@color/black"
+                                android:hint="passwork"
+                                android:textSize="12sp"
                                 android:ems="10" />
 
                             <ImageButton
@@ -185,25 +190,25 @@
                                 android:layout_width="87dp"
                                 android:layout_height="24dp"
                                 android:layout_marginStart="125dp"
+                                android:foregroundGravity="center"
                                 android:layout_marginTop="24dp">
 
                                 <TextView
-                                    android:id="@+id/textView"
-                                    android:layout_width="51dp"
+                                    android:id="@+id/textView435"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/plus_jakarta_sans_extralight"
+                                    android:layout_marginTop="4dp"
                                     android:gravity="start"
-                                    android:text="Sign In"
+                                    android:text="Đăng nhập"
                                     android:textColor="@color/whites"
-                                    android:textStyle="bold" />
 
-                                <ImageView
-                                    android:id="@+id/imageView4"
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_marginStart="58dp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
-                                    app:srcCompat="@drawable/ic_signin_arrow" />
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -227,7 +232,41 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="374dp"
                         android:orientation="vertical"
-                        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:id="@+id/btnRegisterSigin"
+                            android:layout_width="match_parent"
+                            android:layout_height="67dp"
+                            android:background="@drawable/button_background_signin"
+                            android:orientation="horizontal">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="87dp"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="125dp"
+                                android:foregroundGravity="center"
+                                android:layout_marginTop="24dp">
+
+                                <TextView
+                                    android:id="@+id/textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="start"
+                                    android:text="Đăng kí"
+
+                                    android:textColor="@color/whites"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    tools:ignore="MissingConstraints" />
+
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

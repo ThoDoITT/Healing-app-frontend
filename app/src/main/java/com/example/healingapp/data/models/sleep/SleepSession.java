@@ -25,10 +25,8 @@ public class SleepSession {
 
     public long getCreationDateMillis() { return creationDateMillis; } // Getter cho trường mới
     public void setCreationDateMillis(long creationDateMillis) { this.creationDateMillis = creationDateMillis; } // Setter
-
     public long getStartTimeMillis() { return startTimeMillis; }
     public void setStartTimeMillis(long startTimeMillis) { this.startTimeMillis = startTimeMillis; }
-
     public long getEndTimeMillis() { return endTimeMillis; }
     public void setEndTimeMillis(long endTimeMillis) { this.endTimeMillis = endTimeMillis; }
 

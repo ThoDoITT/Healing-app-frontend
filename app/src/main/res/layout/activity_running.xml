@@ -8,6 +8,8 @@
     android:background="@color/background_dark_mode"
     >
 
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,9 +23,13 @@
             android:layout_height="match_parent"
             >
 
-            <include
-                android:id="@+id/include"
-                layout="@layout/view_common_header" />
+            <com.example.healingapp.ui.common.CustomHeaderView
+                android:id="@+id/my_custom_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <LinearLayout
                 android:id="@+id/infoRunning"
@@ -215,7 +221,7 @@
                 android:layout_height="400dp"
                 android:layout_marginBottom="18dp"
                 app:layout_constraintBottom_toTopOf="@id/infoRunning"
-                app:layout_constraintTop_toBottomOf="@+id/include"
+                app:layout_constraintTop_toBottomOf="@+id/my_custom_header"
                 tools:ignore="MissingClass" />
 
 

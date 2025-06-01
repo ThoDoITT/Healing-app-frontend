@@ -8,6 +8,7 @@ import com.example.healingapp.network.models.LoginResponse;
 import com.example.healingapp.network.models.RegisterRequest;
 import com.example.healingapp.network.models.RegisterResponse;
 import com.example.healingapp.network.models.UpdateProfileRequest;
+import com.example.healingapp.network.models.response.GetUserProfileResponse;
 import com.example.healingapp.network.models.response.UpdateProfileResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -141,6 +142,47 @@ public class ApiClient {
         });
     }
 
+    public void getUserProfile(String authToken, String userId, final ApiResponseListener<GetUserProfileResponse, ErrorResponse> listener) {
+        if (authToken == null || userId == null || authToken.isEmpty() || userId.isEmpty()) {
+            Log.e(TAG, "AuthToken hoặc UserId không hợp lệ để lấy thông tin người dùng.");
+            listener.onError(new ErrorResponse("Lỗi Client", "Token hoặc User ID không hợp lệ.", 0));
+            return;
+        }
+
+        Call<GetUserProfileResponse> call = apiService.getUserProfile("Bearer " + authToken, userId);
+
+        call.enqueue(new Callback<GetUserProfileResponse>() {
+            @Override
+            public void onResponse(Call<GetUserProfileResponse> call, Response<GetUserProfileResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    GetUserProfileResponse profileResponse = response.body();
+                    if (profileResponse.isSuccess()) {
+                        listener.onSuccess(profileResponse);
+                    } else {
+                        String apiErrorMessage = "Lỗi không xác định từ API";
+                        if (profileResponse.getError() != null) {
+                            apiErrorMessage = profileResponse.getError().toString();
+                        } else if (profileResponse.getData() == null) {
+                            apiErrorMessage = "Không nhận được dữ liệu người dùng (Code: " + profileResponse.getCode() + ")";
+                        }
+                        Log.e(TAG, "Lỗi logic từ API GetUserProfile: " + apiErrorMessage);
+                        listener.onError(new ErrorResponse(apiErrorMessage, apiErrorMessage, Integer.parseInt(profileResponse.getCode())));
+                    }
+                } else {
+                    // HTTP error (4xx, 5xx)
+                    ErrorResponse errorResponse = parseErrorBody(response); // Reuse your existing parseErrorBody
+                    listener.onError(errorResponse);
+                    Log.e(TAG, "Lỗi HTTP khi GetUserProfile: " + errorResponse.getDetailedMessage() + " | Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUserProfileResponse> call, Throwable t) {
+                Log.e(TAG, "Lỗi mạng (GetUserProfile): ", t);
+                listener.onError(ErrorResponse.fromException(t, 0));
+            }
+        });
+    }
     // parseErrorBody (giữ nguyên hoặc điều chỉnh nếu cần) ...
 }
 

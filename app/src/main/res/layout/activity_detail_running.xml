@@ -10,9 +10,33 @@
     android:fitsSystemWindows="true"
     >
 
-    <include
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/include"
-        layout="@layout/view_common_header" />
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/background_dark_mode"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btn_back_detail_running"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/arrow_small_left_24"
+            app:tint="@color/white"
+            tools:ignore="TouchTargetSizeCheck" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"

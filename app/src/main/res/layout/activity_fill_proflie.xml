@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:padding="24dp">
 
     <LinearLayout
@@ -73,7 +74,7 @@
             android:background="@android:drawable/edit_text"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="10dp"
-            android:hint="@string/phone_hint"
+            android:hint="Chiều cao"
             android:inputType="phone"
             android:padding="12dp" />
 
@@ -85,7 +86,7 @@
             android:background="@android:drawable/edit_text"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="10dp"
-            android:hint="@string/email_hint"
+            android:hint="Cân nặng"
             android:inputType="textEmailAddress"
             android:padding="12dp" />
 
@@ -97,7 +98,7 @@
             android:background="@android:drawable/edit_text"
             android:drawableStart="@drawable/ic_location"
             android:drawablePadding="10dp"
-            android:hint="@string/address_hint"
+            android:hint="Ngày sinh"
             android:padding="12dp" />
 
         <Button

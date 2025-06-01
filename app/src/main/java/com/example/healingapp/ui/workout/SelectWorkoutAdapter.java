@@ -59,7 +59,6 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
         private final TextView textView;
         private final ImageView imageView;
 
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView10);

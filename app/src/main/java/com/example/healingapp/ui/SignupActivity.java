@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class SignupActivity extends AppCompatActivity {
     private ImageButton btnShowPassConfirm;
     private ApiClient apiClient; // Khai báo ApiClient
     private ProgressDialog progressDialog;
+    private TextView btnLoginFromRegister;
 
     private static final String TAG = "SignupActivity";
 
@@ -56,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.txtPassRegister);
         etConfirmPassword = findViewById(R.id.txtConfirmPass);
         btnSubmitRegister = findViewById(R.id.btnSubmitRegister);
-
+        btnLoginFromRegister = findViewById(R.id.btnLoginFromRegister);
         btnShowPassSignup = findViewById(R.id.btnShowPassSignup);
         btnShowPassConfirm = findViewById(R.id.btnShowPassConfirm);
 
@@ -85,6 +87,14 @@ public class SignupActivity extends AppCompatActivity {
                 updatePasswordToggleIcon(etConfirmPassword, btnShowPassConfirm, isConfirmPasswordVisible);
             });
         }
+
+        if (btnLoginFromRegister != null) {
+            btnLoginFromRegister.setOnClickListener(v -> {
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+            });
+        }
+
     }
 
     private void togglePasswordVisibility(EditText editText, boolean isVisible) {

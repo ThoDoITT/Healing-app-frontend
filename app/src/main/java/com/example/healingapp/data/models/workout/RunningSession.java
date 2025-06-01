@@ -3,10 +3,6 @@ package com.example.healingapp.data.models.workout;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.healingapp.data.dao.RunningSessionDao;
-
-import lombok.Data;
-
 @Entity(tableName = "RunningSession")
 
 public class RunningSession {

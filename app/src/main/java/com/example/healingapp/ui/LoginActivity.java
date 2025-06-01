@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etPassword;
     private LinearLayout btnLogin;
+    private LinearLayout btnRegisterSigin;
     private ImageButton btnShowPass;
     private ApiClient apiClient;
     private boolean isPasswordVisible = false;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.editPasswordLogin);
         btnLogin = findViewById(R.id.btnSubmitLogin);
         btnShowPass = findViewById(R.id.btnShowPassSigin);
-
+        btnRegisterSigin = findViewById(R.id.btnRegisterSigin);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Đang đăng nhập...");
@@ -69,6 +70,12 @@ public class LoginActivity extends AppCompatActivity {
                 updatePasswordToggleIcon(etPassword, btnShowPass, isPasswordVisible);
             });
         }
+
+        btnRegisterSigin.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
+        });
+
 
 
     }
