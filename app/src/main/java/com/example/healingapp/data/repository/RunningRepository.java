@@ -1,6 +1,9 @@
 package com.example.healingapp.data.repository;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
@@ -156,7 +159,7 @@ public class RunningRepository {
         calendar.set(Calendar.MILLISECOND, 0);
 
         long startDateInMillis = calendar.getTimeInMillis();
-
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         calendar.add(Calendar.DAY_OF_YEAR, 6);
 
         calendar.set(Calendar.HOUR_OF_DAY, 23);
@@ -165,7 +168,10 @@ public class RunningRepository {
         calendar.set(Calendar.MILLISECOND, 999);
 
         long endDateInMillis = calendar.getTimeInMillis();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getDefault());
+        Log.d(TAG, "Query Week Start: " + sdf.format(startDateInMillis));
+        Log.d(TAG, "Query Week End: " + sdf.format(endDateInMillis));
         // Gọi phương thức DAO mới
         return runningSessionDao.getTotalDurationPerDay(startDateInMillis, endDateInMillis);
     }

@@ -22,14 +22,28 @@ public class DataProcessorHelper {
 
         List<DailySummaryRun> displayData = new ArrayList<>();
 
-        // Điền đầy đủ 7 ngày trong tuần, bắt đầu từ Thứ Hai
-        for (int i = 0; i < 7; i++) {
-            // Calendar.MONDAY là 2, Calendar.TUESDAY là 3, ..., Calendar.SUNDAY là 1
-            int currentDayCalendarValue = Calendar.MONDAY + i; // Lấy giá trị Calendar cho Thứ Hai, Thứ Ba...
+        int[] orderedCalendarDays = {
+                Calendar.MONDAY,
+                Calendar.TUESDAY,
+                Calendar.WEDNESDAY,
+                Calendar.THURSDAY,
+                Calendar.FRIDAY,
+                Calendar.SATURDAY,
+                Calendar.SUNDAY // Đảm bảo Chủ Nhật được thêm vào rõ ràng
+        };
 
-            long totalDuration = dailyDurationsMap.getOrDefault(currentDayCalendarValue, 0L);
-            displayData.add(new DailySummaryRun(currentDayCalendarValue, totalDuration));
+        for (int calendarDayValue : orderedCalendarDays) {
+            long totalDuration = dailyDurationsMap.getOrDefault(calendarDayValue, 0L);
+            displayData.add(new DailySummaryRun(calendarDayValue, totalDuration));
         }
+        // Điền đầy đủ 7 ngày trong tuần, bắt đầu từ Thứ Hai
+//        for (int i = 0; i < 7; i++) {
+//            // Calendar.MONDAY là 2, Calendar.TUESDAY là 3, ..., Calendar.SUNDAY là 1
+//            int currentDayCalendarValue = Calendar.MONDAY + i; // Lấy giá trị Calendar cho Thứ Hai, Thứ Ba...
+//
+//            long totalDuration = dailyDurationsMap.getOrDefault(currentDayCalendarValue, 0L);
+//            displayData.add(new DailySummaryRun(currentDayCalendarValue, totalDuration));
+//        }
 
         // Sắp xếp lại danh sách theo thứ tự mong muốn (ví dụ: Thứ Hai -> Chủ Nhật)
         Collections.sort(displayData, new Comparator<DailySummaryRun>() {
