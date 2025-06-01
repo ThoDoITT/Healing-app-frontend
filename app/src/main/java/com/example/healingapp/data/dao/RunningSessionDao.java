@@ -53,4 +53,6 @@ public interface RunningSessionDao {
             "ORDER BY dayOfWeek ASC") // Sắp xếp theo thứ trong tuần
     List<DailySummaryRun> getTotalDurationPerDay(long startDateInMillis, long endDateInMillis);
 
+    @Query("DELETE FROM RunningSession")
+    void deleteAllRunningSessions();
 }

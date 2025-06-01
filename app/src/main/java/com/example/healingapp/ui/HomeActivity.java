@@ -70,13 +70,13 @@ public class HomeActivity extends AppCompatActivity {
 
         pvRun = findViewById(R.id.pvRun);
         pvRun.setTextColor(Color.WHITE);
-        pvRun.setBackgroundColor(Color.parseColor("#0E3329"));
-        pvRun.setProgressColor(Color.parseColor("#00BA88"));
+        pvRun.setBackgroundColor(Color.parseColor("#402D1F"));
+        pvRun.setProgressColor(Color.parseColor("#FC9C57"));
 
         pvCalo = findViewById(R.id.pvCalo);
         pvCalo.setTextColor(Color.WHITE);
-        pvCalo.setBackgroundColor(Color.parseColor("#0E3329"));
-        pvCalo.setProgressColor(Color.parseColor("#00BA88"));
+        pvCalo.setBackgroundColor(Color.parseColor("#21293A"));
+        pvCalo.setProgressColor(Color.parseColor("#6D98F4"));
 
     }
 
@@ -122,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
         totalActivityPercentageLiveData.addSource(runningViewModel.getTodaysCaloriesBurnedPercentage(), caloriePercentage -> {
             if (caloriePercentage != null) {
                 pvCalo.setProgress(caloriePercentage.intValue());
+
                 latestCaloriePercentage = caloriePercentage;
             } else {
                 pvCalo.setProgress(0);

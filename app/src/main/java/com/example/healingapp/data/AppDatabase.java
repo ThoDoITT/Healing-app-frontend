@@ -52,4 +52,25 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    public void clearAllTablesData() {
+        databaseWriteExecutor.execute(() -> {
+            clearAllTables(); // This is a built-in Room method to delete all data
+
+        });
+    }
+
+    // Optional: If you want to delete specific tables instead of all
+    public void clearRunningSessionsTable() {
+        databaseWriteExecutor.execute(() -> {
+            runDao().deleteAllRunningSessions();
+        });
+    }
+
+    public void clearSleepSessionsTable() {
+        databaseWriteExecutor.execute(() -> {
+            sleepDao().deleteAllSleepSessions();
+        });
+    }
+
 }

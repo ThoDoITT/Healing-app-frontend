@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healingapp.R;
+import com.example.healingapp.data.AppDatabase;
 import com.example.healingapp.network.ApiClient;
 import com.example.healingapp.network.ApiResponseListener;
 import com.example.healingapp.network.models.ErrorResponse;
@@ -38,8 +39,6 @@ public class ProfileViewActivity extends AppCompatActivity {
     private ImageView btnBack;
 
     private Button btnLogout;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +79,17 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         btnLogout.setOnClickListener(v -> {
             sessionManager.clearSession();
+            clearRoomDatabase();
             Intent intent = new Intent(ProfileViewActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         });
+    }
+
+
+    private void clearRoomDatabase () {
+        AppDatabase db = AppDatabase.getDatabase(this); // Get your database instance
+        db.clearAllTablesData(); // Call the method to clear all tables
+
     }
 }
