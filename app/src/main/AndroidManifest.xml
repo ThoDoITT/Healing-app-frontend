@@ -2,6 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" tools:node="remove"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -10,17 +25,103 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HealingApp"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.MYPROJECT"
         tools:targetApi="31">
+
+
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.profile.ProfileViewActivity"
+            android:exported="false"
+            />
+        <activity android:name=".ui.workout.ListWorkoutActivity"
+            android:exported="false"
+            />
+
+        <activity
+            android:name=".ui.body.body1Activity"
+            android:exported="true">
+
+        </activity>
+
+        <activity android:name=".ui.profile.ProfileActivity" android:exported="false" />
+
+        <activity android:name=".ui.LoginActivity"
+
+            android:exported="true">
+
+        </activity>
+        <activity android:name=".ui.SignupActivity"
+
+            android:exported="true">
+
+        </activity>
+
+        <activity android:name=".ui.sleep.StartSleepActivity"
+
+            android:exported="true">
+
+        </activity>
+
+
+        <activity
+            android:name=".ui.workout.DetailRunningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.common.LoadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.workout.SelectWorkoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.workout.RunningActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
+
+        <receiver
+            android:name=".service.AlarmReceiver"
+            android:exported="false" />
+
+        <service
+            android:name=".service.AlarmService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"
+            tools:ignore="ForegroundServicePermission,ForegroundServiceType" /> <activity
+        android:name=".ui.sleep.AlarmDismissActivity"
+        android:exported="false"
+        android:showWhenLocked="true"
+        android:turnScreenOn="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:launchMode="singleTask"
+        android:taskAffinity=""
+        android:excludeFromRecents="true"
+        tools:ignore="MissingClass" />
+
+        <receiver android:name=".service.AlarmDismissReceiver" android:exported="false" >
+            <intent-filter>
+                <action android:name="DISMISS_ALARM_ACTION" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>
