@@ -1,5 +1,7 @@
 package com.example.healingapp.utils;
 
+import android.util.Log;
+
 import com.example.healingapp.data.dao.DailySummaryRun;
 
 import java.util.ArrayList;
@@ -11,16 +13,21 @@ import java.util.List;
 import java.util.Map;
 
 public class DataProcessorHelper {
+
+    private static final String TAG = "DataProcessorHelper";
+
     public List<DailySummaryRun> prepareWeeklyDisplayData(List<DailySummaryRun> rawData) {
-        // Tạo một Map để dễ dàng truy cập tổng thời gian theo thứ
         Map<Integer, Long> dailyDurationsMap = new HashMap<>();
         for (DailySummaryRun summary : rawData) {
-            // Chuyển đổi dayOfWeek từ SQLite (0=CN, 1=T2...) sang Calendar (1=CN, 2=T2...)
-            int calendarDayOfWeek = (summary.getDayOfWeek() == 0) ? Calendar.SUNDAY : (summary.getDayOfWeek() + 1);
+            // SỬA ĐỔI QUAN TRỌNG: Gọi phương thức chuyển đổi mới
+            // Nếu dayOfWeek từ SQLite là 0 (theo xác nhận của bạn là Thứ Hai),
+            // thì nó sẽ được chuyển thành Calendar.MONDAY (giá trị 2)
+            int calendarDayOfWeek = DailySummaryRun.convertSqliteDayOfWeekToCalendar(summary.getDayOfWeek());
             dailyDurationsMap.put(calendarDayOfWeek, summary.getTotalDuration());
         }
 
         List<DailySummaryRun> displayData = new ArrayList<>();
+
 
         int[] orderedCalendarDays = {
                 Calendar.MONDAY,
@@ -29,33 +36,22 @@ public class DataProcessorHelper {
                 Calendar.THURSDAY,
                 Calendar.FRIDAY,
                 Calendar.SATURDAY,
-                Calendar.SUNDAY // Đảm bảo Chủ Nhật được thêm vào rõ ràng
+                Calendar.SUNDAY
         };
 
+        Log.d(TAG, "Starting to fill displayData with ordered days:");
         for (int calendarDayValue : orderedCalendarDays) {
             long totalDuration = dailyDurationsMap.getOrDefault(calendarDayValue, 0L);
             displayData.add(new DailySummaryRun(calendarDayValue, totalDuration));
+            Log.d(TAG, "Added day: " + calendarDayValue + " (as " + new DailySummaryRun(calendarDayValue, 0).getDayOfWeekName() + "), Duration: " + totalDuration);
         }
-        // Điền đầy đủ 7 ngày trong tuần, bắt đầu từ Thứ Hai
-//        for (int i = 0; i < 7; i++) {
-//            // Calendar.MONDAY là 2, Calendar.TUESDAY là 3, ..., Calendar.SUNDAY là 1
-//            int currentDayCalendarValue = Calendar.MONDAY + i; // Lấy giá trị Calendar cho Thứ Hai, Thứ Ba...
-//
-//            long totalDuration = dailyDurationsMap.getOrDefault(currentDayCalendarValue, 0L);
-//            displayData.add(new DailySummaryRun(currentDayCalendarValue, totalDuration));
-//        }
+        Log.d(TAG, "Finished filling displayData. Size: " + displayData.size());
 
-        // Sắp xếp lại danh sách theo thứ tự mong muốn (ví dụ: Thứ Hai -> Chủ Nhật)
-        Collections.sort(displayData, new Comparator<DailySummaryRun>() {
-            @Override
-            public int compare(DailySummaryRun s1, DailySummaryRun s2) {
-                // Xử lý để Thứ Hai (Calendar.MONDAY) đứng đầu
-                int day1 = (s1.getDayOfWeek() == Calendar.SUNDAY) ? 8 : s1.getDayOfWeek(); // Đẩy CN về cuối
-                int day2 = (s2.getDayOfWeek() == Calendar.SUNDAY) ? 8 : s2.getDayOfWeek();
 
-                return Integer.compare(day1, day2);
-            }
-        });
+        Log.d(TAG, "Final displayData (after all processing - should be ordered correctly):");
+        for (DailySummaryRun summary : displayData) {
+            Log.d(TAG, "Day: " + summary.getDayOfWeekName() + " (Calendar value: " + summary.getDayOfWeek() + "), Total Duration: " + summary.getTotalDuration());
+        }
 
         return displayData;
     }

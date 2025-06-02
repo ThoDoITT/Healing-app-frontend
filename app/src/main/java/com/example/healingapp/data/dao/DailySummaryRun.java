@@ -1,5 +1,7 @@
 package com.example.healingapp.data.dao;
 
+import java.util.Calendar;
+
 public class DailySummaryRun {
     public String date; // Định dạng YYYY-MM-DD
     public int dayOfWeek;
@@ -40,6 +42,27 @@ public class DailySummaryRun {
                 return "Chủ Nhật";
             default:
                 return "";
+        }
+    }
+
+    public static int convertSqliteDayOfWeekToCalendar(int sqliteDayOfWeek) {
+        switch (sqliteDayOfWeek) {
+            case 0:
+                return Calendar.MONDAY;    // Nếu 0 là Thứ Hai
+            case 1:
+                return Calendar.TUESDAY;   // Nếu 1 là Thứ Ba
+            case 2:
+                return Calendar.WEDNESDAY; // Nếu 2 là Thứ Tư
+            case 3:
+                return Calendar.THURSDAY;  // Nếu 3 là Thứ Năm
+            case 4:
+                return Calendar.FRIDAY;    // Nếu 4 là Thứ Sáu
+            case 5:
+                return Calendar.SATURDAY;  // Nếu 5 là Thứ Bảy
+            case 6:
+                return Calendar.SUNDAY;    // Nếu 6 là Chủ Nhật
+            default:
+                return -1; // Giá trị không hợp lệ
         }
     }
 }

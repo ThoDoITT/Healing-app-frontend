@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     android:padding="24dp">
 
     <LinearLayout
@@ -17,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:textColor="@color/black"
             android:text="@string/fill_info_title"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -29,6 +31,8 @@
             android:background="@android:drawable/edit_text"
             android:drawableStart="@drawable/ic_person"
             android:drawablePadding="10dp"
+
+            android:textColor="@color/black"
             android:hint="@string/name_hint"
             android:padding="12dp" />
 
@@ -39,6 +43,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/textViewGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,18 +56,21 @@
                 android:id="@+id/checkboxMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="Nam" />
 
             <CheckBox
                 android:id="@+id/checkboxFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="Nữ" />
 
             <CheckBox
                 android:id="@+id/checkboxOther"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="Khác" />
         </LinearLayout>
 
@@ -71,10 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:textColor="@color/black"
             android:background="@android:drawable/edit_text"
-            android:drawableStart="@drawable/ic_phone"
+            android:drawableStart="@drawable/text_height"
             android:drawablePadding="10dp"
             android:hint="Chiều cao"
+
             android:inputType="phone"
             android:padding="12dp" />
 
@@ -84,8 +94,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@android:drawable/edit_text"
-            android:drawableStart="@drawable/ic_email"
+            android:drawableStart="@drawable/weight_gain"
             android:drawablePadding="10dp"
+            android:textColor="@color/black"
             android:hint="Cân nặng"
             android:inputType="textEmailAddress"
             android:padding="12dp" />
@@ -96,9 +107,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:background="@android:drawable/edit_text"
-            android:drawableStart="@drawable/ic_location"
+            android:drawableStart="@drawable/calendar"
             android:drawablePadding="10dp"
             android:hint="Ngày sinh"
+            android:textColor="@color/black"
             android:padding="12dp" />
 
         <Button

@@ -58,28 +58,16 @@ public class TrackingUtils {
         return String.format("%d:%02d min/km", mins, secs);
     }
 
-    // --- CÁC HÀM MỚI BỔ SUNG ---
-
-    // Ngưỡng khoảng cách tối thiểu để coi là cập nhật vị trí mới (ví dụ: 1 mét)
-    private static final float MIN_DISTANCE_CHANGE_THRESHOLD = 1.0f; // mét
-    // Ngưỡng tốc độ tối đa hợp lý cho người chạy bộ (ví dụ: 10 m/s = 36 km/h)
-    // Tốc độ của Bolt là khoảng 10.4 m/s, nên 10 m/s là một ngưỡng khá cao.
+    private static final float MIN_DISTANCE_CHANGE_THRESHOLD = 1.0f;
     private static final float MAX_SPEED_THRESHOLD_MPS = 10.0f; // mét/giây
 
-    /**
-     * Kiểm tra xem một cập nhật vị trí mới có hợp lệ hay không.
-     * Giúp lọc bỏ các điểm GPS bị nhảy hoặc dữ liệu bất thường.
-     * @param lastPoint Điểm vị trí cuối cùng đã biết.
-     * @param newPoint Điểm vị trí mới được nhận.
-     * @return true nếu điểm mới được coi là hợp lệ, false nếu không.
-     */
+
     public static boolean isValidLocationUpdate(LocationPoint lastPoint, LocationPoint newPoint) {
-        // Nếu chưa có điểm nào hoặc điểm mới là null, coi là hợp lệ để bắt đầu theo dõi.
+
         if (lastPoint == null || newPoint == null) {
             return true;
         }
 
-        // Tạo đối tượng Location tạm thời để tính khoảng cách và thời gian
         Location lastLoc = new Location("");
         lastLoc.setLatitude(lastPoint.lat);
         lastLoc.setLongitude(lastPoint.lng);
@@ -90,22 +78,22 @@ public class TrackingUtils {
         newLoc.setLongitude(newPoint.lng);
         newLoc.setTime(newPoint.timestamp);
 
-        float distance = lastLoc.distanceTo(newLoc); // Khoảng cách giữa hai điểm (mét)
-        long timeDiff = newPoint.timestamp - lastPoint.timestamp; // Chênh lệch thời gian (mili giây)
+        float distance = lastLoc.distanceTo(newLoc);
+        long timeDiff = newPoint.timestamp - lastPoint.timestamp;
 
-        // Bỏ qua nếu khoảng cách quá nhỏ (có thể là lỗi cảm biến hoặc người dùng đứng yên)
+
         if (distance < MIN_DISTANCE_CHANGE_THRESHOLD) {
             Log.d("TrackingUtils", "Location update ignored: Distance too small (" + distance + "m)");
             return false;
         }
 
-        // Bỏ qua nếu thời gian chênh lệch quá ngắn hoặc âm (tránh chia cho 0 và lỗi timestamp)
+
         if (timeDiff <= 0) {
             Log.d("TrackingUtils", "Location update ignored: Invalid time difference (" + timeDiff + "ms)");
             return false;
         }
 
-        // Tính tốc độ (mét/giây) và kiểm tra xem có quá nhanh một cách bất thường không
+
         float speed = distance / (timeDiff / 1000.0f); // đổi ms sang giây
         if (speed > MAX_SPEED_THRESHOLD_MPS) {
             Log.w("TrackingUtils", "Location update ignored: Suspiciously high speed (" + String.format("%.2f", speed) + " m/s)");
@@ -129,8 +117,7 @@ public class TrackingUtils {
         }
 
         double metValue;
-        // Ước tính giá trị MET dựa trên tốc độ (km/h)
-        // Đây là các giá trị xấp xỉ, bạn có thể điều chỉnh hoặc dùng một bảng tra cứu chi tiết hơn.
+
         if (speedKmh < 6.0) { // Đi bộ nhanh
             metValue = 3.5;
         } else if (speedKmh < 8.0) { // Chạy chậm

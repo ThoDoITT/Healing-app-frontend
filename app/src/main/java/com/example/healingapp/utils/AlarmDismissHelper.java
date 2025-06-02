@@ -14,13 +14,12 @@ public class AlarmDismissHelper {
     private static final String TAG = "AlarmDismissHelper";
 
     public static void dismissAlarmAndFinalizeSession(Context context, int sessionId) {
-        Log.d(TAG, "Cố gắng tắt báo thức và hoàn tất phiên ID: " + sessionId);
 
         Intent serviceIntent = new Intent(context, AlarmService.class);
         context.stopService(serviceIntent); // Dừng service nhạc chuông/rung
 
         if (sessionId == -1) {
-            Log.e(TAG, "ID phiên không hợp lệ (-1), không thể hoàn tất.");
+
             // Cập nhật SharedPreferences nếu có thể
             SharedPreferences sharedPreferences = context.getSharedPreferences(Consts.PREFS_NAME, Context.MODE_PRIVATE);
             int activeId = sharedPreferences.getInt(Consts.KEY_ACTIVE_SLEEP_SESSION_ID, -1);

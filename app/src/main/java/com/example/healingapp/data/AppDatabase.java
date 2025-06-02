@@ -21,20 +21,16 @@ import java.util.concurrent.Executors;
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract RunningSessionDao runDao();
-
     public abstract SleepDao sleepDao();
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-//     ĐỊNH NGHĨA MIGRATION TỪ VERSION 1 SANG 2
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Câu lệnh SQL để thêm cột mới 'creationDateMillis' vào bảng 'sleep_sessions'
-            // INTEGER dùng để lưu trữ kiểu long (timestamp) trong SQLite
-            // NOT NULL DEFAULT 0: đảm bảo cột này không null, và các hàng cũ sẽ có giá trị mặc định là 0
+
             database.execSQL("ALTER TABLE SleepSessions ADD COLUMN creationDateMillis INTEGER NOT NULL DEFAULT 0");
         }
     };
@@ -60,7 +56,6 @@ public abstract class AppDatabase extends RoomDatabase {
         });
     }
 
-    // Optional: If you want to delete specific tables instead of all
     public void clearRunningSessionsTable() {
         databaseWriteExecutor.execute(() -> {
             runDao().deleteAllRunningSessions();
