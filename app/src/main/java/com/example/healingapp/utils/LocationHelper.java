@@ -24,17 +24,17 @@ import com.google.android.gms.location.Priority;
 public class LocationHelper {
     private static FusedLocationProviderClient client;
     private static LocationCallback callback;
-    private static LocationUpdateListener sLocationUpdateListener; // Interface callback riêng
+    private static LocationUpdateListener sLocationUpdateListener;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
-    private static final String TAG = "LocationHelper"; // Thẻ để debug
+    private static final String TAG = "LocationHelper";
 
-    // Interface callback để nhận cập nhật vị trí
+
     public interface LocationUpdateListener {
         void onLocationChanged(Location location);
         void onLocationError(String errorMessage);
     }
 
-    // Hàm yêu cầu quyền truy cập vị trí
+
     public static void requestPermissions(Activity activity) {
         // Kiểm tra quyền ACCESS_FINE_LOCATION
         boolean fineLocationGranted = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -42,26 +42,25 @@ public class LocationHelper {
         boolean coarseLocationGranted = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         if (!fineLocationGranted || !coarseLocationGranted) {
-            // Yêu cầu cả hai quyền nếu chưa được cấp
+            // yêu cầu lại quyền
             ActivityCompat.requestPermissions(activity,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
-    // Hàm kiểm tra xem quyền đã được cấp hay chưa
+
     public static boolean hasLocationPermissions(Context context) {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
-    // Hàm yêu cầu cập nhật vị trí
     @SuppressLint("MissingPermission")
     public static void requestLocationUpdates(Context context, LocationUpdateListener listener) {
         sLocationUpdateListener = listener; // Gán listener
         client = LocationServices.getFusedLocationProviderClient(context);
 
-        // **KIỂM TRA QUYỀN TRỰC TIẾP TRƯỚC KHI GỌI API NHẠY CẢM**
+
         if (!hasLocationPermissions(context)) {
             Log.e(TAG, "Location permissions not granted. Cannot request location updates.");
             if (sLocationUpdateListener != null) {
@@ -71,7 +70,7 @@ public class LocationHelper {
             return;
         }
 
-        // Tạo LocationRequest sử dụng LocationRequest.Builder (cách mới)
+
         LocationRequest request = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3000)
                 .setMinUpdateIntervalMillis(2000) // Tần suất nhanh nhất
                 .build();
@@ -122,6 +121,6 @@ public class LocationHelper {
                         }
                     });
         }
-        sLocationUpdateListener = null; // Xóa listener khi dừng
+        sLocationUpdateListener = null;
     }
 }

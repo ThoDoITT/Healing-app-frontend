@@ -67,27 +67,22 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
     private Button btnFinishRun;
     private Button btnStartRun;
     private ObjectAnimator blinkAnimator;
-// step counter
-// Biến cho việc đếm bước
+
     private StepCounterHelper stepCounterHelper;
-    private int totalAccumulatedSteps = 0; // Tổng số bước đã tích lũy từ các phân đoạn chạy trước đó
-    private int currentSegmentSteps = 0;   // Số bước trong phân đoạn chạy hiện tại (từ resume/start đến pause/finish)
-    private boolean stepSensorAvailable = true; // Giả định cảm biến có sẵn ban đầu
-
-
+    private int totalAccumulatedSteps = 0;
+    private int currentSegmentSteps = 0;
+    private boolean stepSensorAvailable = true;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
-    // Thêm mã yêu cầu quyền mới
-
     private boolean isTrackingActive = false;
-    private boolean isPaused = false; // Đang ở trạng thái tạm dừng
-    private boolean isBlinking = false; // set nhấp nháy
+    private boolean isPaused = false;
+    private boolean isBlinking = false;
     private Runnable updateTimeRunnable = new Runnable() {
         @Override
         public void run() {
-            if (isTrackingActive && startTime != 0) { // Chỉ cập nhật nếu tracking đang hoạt động
+            if (isTrackingActive && startTime != 0) {
                 long duration = SystemClock.elapsedRealtime() - startTime;
                 tvTime.setText(TrackingUtils.formatDuration(duration));
-                // Lặp lại việc này sau mỗi 1 giây
+
                 timeHandler.postDelayed(this, 1000);
             }
         }
@@ -96,23 +91,23 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
     private Runnable blinkRunnable = new Runnable() {
         @Override
         public void run() {
-            if (isBlinking) { // Chỉ nhấp nháy nếu cờ đang bật
-                // Thay đổi độ trong suốt của nút để tạo hiệu ứng nhấp nháy
+            if (isBlinking) {
+
                 if (btnPauseResumeRun.getAlpha() == 1.0f) {
-                    btnPauseResumeRun.setAlpha(0.5f); // Làm mờ đi một nửa
+                    btnPauseResumeRun.setAlpha(0.5f);
                 } else {
-                    btnPauseResumeRun.setAlpha(1.0f); // Trở lại bình thường
+                    btnPauseResumeRun.setAlpha(1.0f);
                 }
-                // Lặp lại sau mỗi 500ms (0.5 giây)
+
                 blinkHandler.postDelayed(this, 500);
             }
         }
     };
 
     public enum RunState {
-        INITIAL,   // Trạng thái ban đầu, chưa chạy
-        RUNNING,   // Đang chạy
-        PAUSED     // Đang tạm dừng
+        INITIAL,
+        RUNNING,
+        PAUSED
     }
 
     @Override
@@ -162,12 +157,6 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
         }
 
 
-        // KHÔNG GỌI requestPermissions Ở ĐÂY NỮA.
-        // Việc kiểm tra và yêu cầu quyền sẽ được thực hiện trong onResume() để đảm bảo
-        // việc theo dõi bắt đầu đúng khi Activity hiển thị.
-
-
-
         // set event for btnstart
         btnStartRun.setOnClickListener(view -> {
             if (!isTrackingActive) {
@@ -215,8 +204,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
     private void requestMissingPermissions() {
         List<String> permissionsToRequest = new ArrayList<>();
         if (!LocationHelper.hasLocationPermissions(this)) {
-            // LocationHelper.requestPermissions(this) sẽ tự thêm các quyền vị trí
-            // nhưng ta sẽ gọi requestPermissions với danh sách tổng hợp.
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 permissionsToRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
                 permissionsToRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -232,8 +220,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
 
         if (!permissionsToRequest.isEmpty()) {
             ActivityCompat.requestPermissions(this, permissionsToRequest.toArray(new String[0]), LOCATION_PERMISSION_REQUEST_CODE);
-            // Sử dụng LOCATION_PERMISSION_REQUEST_CODE vì onRequestPermissionsResult đã xử lý nó.
-            // Nếu muốn mã riêng cho ACTIVITY_RECOGNITION, cần cập nhật onRequestPermissionsResult.
+
         }
     }
 
@@ -245,14 +232,12 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             mapView.onResume();
         }
 
-        // --- BẮT ĐẦU PHẦN SỬA ĐỔI QUAN TRỌNG ---
-        // Mỗi khi Activity trở lại foreground, ta kiểm tra quyền và khởi động tracking
+
         if (LocationHelper.hasLocationPermissions(this)) {
-            // Nếu đã có quyền và chưa bắt đầu tracking, thì khởi động
+
             if (!isTrackingActive) {
                 Log.d("RunningActivity", "onResume: Permissions already granted. Starting tracking.");
-//                startTracking();
-//                isTrackingActive = true; // Đặt cờ tracking đã bắt đầu
+
             } else {
 
                 Log.d("RunningActivity", "onResume: Tracking already active.");
@@ -262,9 +247,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             // Nếu chưa có quyền, yêu cầu quyền.
             requestMissingPermissions();
             Log.d("RunningActivity", "onResume: Permissions not granted. Requesting permissions.");
-//            LocationHelper.requestPermissions(this);
         }
-        // --- KẾT THÚC PHẦN SỬA ĐỔI QUAN TRỌNG ---
         if (isTrackingActive && !isPaused) {
             timeHandler.post(updateTimeRunnable);
             if (stepSensorAvailable && stepCounterHelper != null && !stepCounterHelper.isListening()) {
@@ -280,14 +263,13 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             if (LocationHelper.hasLocationPermissions(this)) {
                 Log.d("RunningActivity", "Location permissions granted via onRequestPermissionsResult.");
                 if (!isTrackingActive) { // Đảm bảo chỉ gọi startTracking một lần
-                    //startTracking();
-                    //isTrackingActive = true;
+
                     Toast.makeText(this, "Đã cấp quyền vị trí. Bạn có thể nhấn Start.", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(this, "Location permission denied. Cannot track your run.", Toast.LENGTH_LONG).show();
                 Log.e("RunningActivity", "Location permissions denied.");
-                // Có thể thoát Activity hoặc vô hiệu hóa các chức năng liên quan đến vị trí
+
             }
         }
     }
@@ -300,7 +282,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             return;
         }
 
-        // Reset dữ liệu cũ nếu có
+        // Reset dữ liệu cũ
         pathPoints.clear();
         runPath.setPoints(new ArrayList<>());
         mapView.invalidate();
@@ -312,15 +294,13 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
         // Reset trạng thái đếm bước
         totalAccumulatedSteps = 0;
         currentSegmentSteps = 0;
-//        if (!hasActivityRecognitionPermission()) {
-//            return;
-//        }
+
         if (stepSensorAvailable && stepCounterHelper != null) {
-            stepCounterHelper.startListening(); // Bắt đầu đếm bước cho phân đoạn mới
+            stepCounterHelper.startListening();
         }
 
         startTime = SystemClock.elapsedRealtime();
-        totalPausedDuration = 0; // Reset tổng thời gian tạm dừng
+        totalPausedDuration = 0;
         isTrackingActive = true;
         isPaused = false;
         Log.d("RunningActivity", "Tracking started. startTime: " + startTime);
@@ -346,7 +326,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
                                 currentSpeedKmh = 60f / currentPace;
                             }
 
-                            // TODO: Lấy trọng lượng người dùng thực tế
+
                             float userWeightKg = 65f;
 
                             float caloriesBurned = TrackingUtils.calculateCaloriesBurned(userWeightKg, currentSpeedKmh, currentDuration);
@@ -380,15 +360,15 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
 
     private void pauseTracking() {
         if (isTrackingActive && !isPaused) {
-            LocationHelper.stopLocationUpdates(); // Dừng cập nhật vị trí
-            timeHandler.removeCallbacks(updateTimeRunnable); // Dừng cập nhật thời gian
-            pauseTime = SystemClock.elapsedRealtime(); // Ghi lại thời điểm tạm dừng
+            LocationHelper.stopLocationUpdates();
+            timeHandler.removeCallbacks(updateTimeRunnable);
+            pauseTime = SystemClock.elapsedRealtime();
             isPaused = true;
 
             if (stepSensorAvailable && stepCounterHelper != null) {
-                stepCounterHelper.stopListening(); // Dừng lắng nghe cảm biến bước
-                totalAccumulatedSteps += currentSegmentSteps; // Cộng dồn bước của phân đoạn vừa kết thúc
-                currentSegmentSteps = 0; // Reset bước của phân đoạn hiện tại
+                stepCounterHelper.stopListening();
+                totalAccumulatedSteps += currentSegmentSteps;
+                currentSegmentSteps = 0;
             }
 
             Log.d("RunningActivity", "Đã tạm dừng theo dõi. Tổng bước tích lũy: " + totalAccumulatedSteps);
@@ -402,13 +382,13 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
     private void resumeTracking() {
         if (isTrackingActive && isPaused) {
             stopBlinking();
-            totalPausedDuration += (SystemClock.elapsedRealtime() - pauseTime); // Cộng dồn thời gian tạm dừng
-            timeHandler.post(updateTimeRunnable); // Tiếp tục cập nhật thời gian
+            totalPausedDuration += (SystemClock.elapsedRealtime() - pauseTime);
+            timeHandler.post(updateTimeRunnable);
             LocationHelper.requestLocationUpdates(this, new LocationHelper.LocationUpdateListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    // Logic cập nhật vị trí giống như trong startTracking
-                    if (location != null && !isPaused) { // Chỉ xử lý khi không tạm dừng
+
+                    if (location != null && !isPaused) {
                         LocationPoint point = new LocationPoint(location.getLatitude(), location.getLongitude(), System.currentTimeMillis());
 
                         if (pathPoints.isEmpty() || TrackingUtils.isValidLocationUpdate(pathPoints.get(pathPoints.size() - 1), point)) {
@@ -455,7 +435,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             if (stepSensorAvailable && stepCounterHelper != null) {
                 if (hasActivityRecognitionPermission()) {
                     stepCounterHelper.startListening();
-                    // Hoàn tất quá trình resume nếu có quyền
+
                     totalPausedDuration += (SystemClock.elapsedRealtime() - pauseTime);
                     timeHandler.post(updateTimeRunnable);
                     isPaused = false;
@@ -464,10 +444,8 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
                 } else {
                     Log.w("RunningActivity", "Quyền Nhận dạng Hoạt động không được cấp khi resume. Yêu cầu quyền.");
                     Toast.makeText(this, "Cần quyền nhận dạng hoạt động để đếm bước.", Toast.LENGTH_LONG).show();
-                    requestMissingPermissions(); // <<< YÊU CẦU QUYỀN TẠI ĐÂY
-                    // Không thay đổi isPaused hay updateButtonStates ở đây.
-                    // onRequestPermissionsResult sẽ xử lý các bước tiếp theo.
-                    // UI sẽ vẫn ở trạng thái "Paused" (ví dụ: nút Resume vẫn hiển thị).
+                    requestMissingPermissions();
+
                 }
             } else {
                 // Cảm biến không khả dụng hoặc helper là null, vẫn resume các phần khác của tracking
@@ -483,19 +461,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
 
     // Bạn có thể cần một hàm stopTracking() nếu có nút dừng
     private void stopTracking() {
-//        if (stepSensorAvailable && stepCounterHelper != null && stepCounterHelper.isListening()) {
-//            stepCounterHelper.stopListening();
-//        }
-//
-//        if (isTrackingActive) {
-//            LocationHelper.stopLocationUpdates();
-//            isTrackingActive = false;
-//            startTime = 0; // Reset thời gian
-//            timeHandler.removeCallbacks(updateTimeRunnable);
-//            Log.d("RunningActivity", "Tracking stopped.");
-//            // Có thể lưu dữ liệu chạy bộ vào database ở đây
-//             // DỪNG NHẤP NHÁY KHI ACTIVITY TẠM DỪNG
-//        }
+
         if (stepSensorAvailable && stepCounterHelper != null && stepCounterHelper.isListening()) {
             stepCounterHelper.stopListening();
         }
@@ -514,9 +480,7 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
         if (mapView != null) {
             mapView.onPause();
         }
-        // Để tối ưu pin, bạn có thể cân nhắc dừng cập nhật vị trí khi Activity onPause
-        // Nếu bạn muốn tiếp tục theo dõi khi ứng dụng ở nền, bạn cần một Foreground Service.
-        // LocationHelper.stopLocationUpdates(); // Nếu không dùng Foreground Service
+
         timeHandler.removeCallbacks(updateTimeRunnable);
         stopBlinking();
     }
@@ -524,8 +488,8 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Luôn dừng cập nhật vị trí và giải phóng tài nguyên khi Activity bị hủy
-        stopTracking(); // Gọi stopTracking để đảm bảo dừng mọi thứ
+
+        stopTracking();
         if (mapView != null) {
             mapView.onDetach();
         }
@@ -542,12 +506,12 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
 
             int finalTotalSteps = totalAccumulatedSteps + currentSegmentSteps;
             if (stepSensorAvailable && stepCounterHelper != null && stepCounterHelper.isListening()) {
-                stepCounterHelper.stopListening(); // Dừng nếu nó vẫn đang chạy
-                // currentSegmentSteps nên đã được cập nhật bởi onStepsCounted
+                stepCounterHelper.stopListening();
+
             }
             Log.d("RunningActivity", "Kết thúc theo dõi. Tổng số bước cuối cùng: " + finalTotalSteps);
 
-            // Chuẩn bị dữ liệu để gửi đi
+            // set data save
             long finalDurationMillis = SystemClock.elapsedRealtime() - startTime - totalPausedDuration;
             String finalDurationFormatted = TrackingUtils.formatDuration(finalDurationMillis);
             float finalDistanceMeters = TrackingUtils.getTotalDistance(pathPoints);
@@ -564,12 +528,12 @@ public class RunningActivity extends AppCompatActivity implements IStepListener 
             // Tạo JSON payload
             JSONObject runDataJson = new JSONObject();
             try {
-                runDataJson.put("startTime", actualRunStartTime); // long - Thời điểm bắt đầu chạy
-                runDataJson.put("endTime", actualRunEndTime);     // long - Thời điểm kết thúc chạy
-                runDataJson.put("distanceMeters", finalDistanceMeters); // float - Đơn vị mét
-                runDataJson.put("paceMinPerKm", finalPaceMinPerKm);   // float - Phút/km
-                runDataJson.put("durationMillis", finalDurationMillis); // long - Milliseconds
-                runDataJson.put("calories", Math.round(finalCalories)); // long - Làm tròn float calories
+                runDataJson.put("startTime", actualRunStartTime);
+                runDataJson.put("endTime", actualRunEndTime);
+                runDataJson.put("distanceMeters", finalDistanceMeters);
+                runDataJson.put("paceMinPerKm", finalPaceMinPerKm);
+                runDataJson.put("durationMillis", finalDurationMillis);
+                runDataJson.put("calories", Math.round(finalCalories));
                 runDataJson.put("steps", finalTotalSteps);
             } catch (JSONException e) {
                 Log.e("RunningActivity", "Lỗi tạo JSON cho dữ liệu chạy: " + e.getMessage());

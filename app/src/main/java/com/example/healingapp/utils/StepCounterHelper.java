@@ -27,8 +27,7 @@ public class StepCounterHelper implements SensorEventListener {
         this.listener = listener;
         this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         if (this.sensorManager != null) {
-            // Sử dụng TYPE_STEP_COUNTER để nhận tổng số bước kể từ lần khởi động cuối cùng
-            // mà cảm biến này được kích hoạt.
+
             this.stepSensor = this.sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         }
     }
